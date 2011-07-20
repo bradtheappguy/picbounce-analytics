@@ -31,3 +31,4 @@ gem 'sqlite3'
 #   gem 'webrat'
 # end
 gem "taps", "0.3.23", :path => 'vendor/gems/taps-0.3.23'
+gem 'heroku'
