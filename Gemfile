@@ -30,5 +30,6 @@ gem 'sqlite3'
 # group :development, :test do
 #   gem 'webrat'
 # end
-gem "taps", "0.3.23", :path => 'vendor/gems/taps-0.3.23'
+gem "taps", "0.3.23"
+#, :path => 'vendor/gems/taps-0.3.23'
 gem 'heroku'
