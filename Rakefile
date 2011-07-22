@@ -4,4 +4,10 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
+module ::Tapstest
+  class Application
+    include Rake::DSL
+  end
+end
+
 Tapstest::Application.load_tasks
