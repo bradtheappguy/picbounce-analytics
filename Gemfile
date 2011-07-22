@@ -32,3 +32,4 @@ gem 'sqlite3'
 # end
 gem "taps", "0.3.23", :path => 'vendor/gems/taps-0.3.23'
 gem 'heroku'
+ 
