@@ -39,7 +39,8 @@ module Utils
   end
 
   def format_data(data, opts={})
-    return {} if data.size == 0
+    puts "format_data"
+		return {} if data.size == 0
     string_columns = opts[:string_columns] || []
     schema = opts[:schema] || []
     table  = opts[:table]
@@ -67,6 +68,9 @@ Data   : #{data}
           ERROR
         end
       end
+		#	puts "****"
+		#	puts row[h]
+		#	puts "****"
       header.collect { |h| row[h] }
     end
     { :header => header, :data => only_data }

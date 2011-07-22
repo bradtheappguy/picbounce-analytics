@@ -8,7 +8,7 @@ require 'vendor/okjson'
 module Taps
 
 class DataStream
-  DEFAULT_CHUNKSIZE = 1000
+  DEFAULT_CHUNKSIZE = 10
 
   attr_reader :db, :state
 
@@ -21,7 +21,7 @@ class DataStream
       :total_chunksize => 0,
     }.merge(state)
     @state[:chunksize] ||= DEFAULT_CHUNKSIZE
-    @complete = false
+		@complete = false
   end
 
   def log
@@ -127,13 +127,56 @@ class DataStream
     @complete
   end
 
+  def anon_rows(rows)
+		sensitive_cols = [:facebook_access_token, :password, :facebook_user_id] 
+		
+		header = rows[:header]
+    
+		puts header.class
+		puts header.to_yaml
+
+		for index in 0 ... header.size
+      puts "header[index] is #{header[index]}"
+			if sensitive_cols.include? header[index]
+			  puts "found col to anon"
+				data = rows[:data]
+				data.each { |datum|
+          datum[index] = Digest::MD5.hexdigest(datum[index]) if datum[index] != nil
+				}
+			end
+		end
+	
+
+		
+		#data rows[:data]
+		
+		#rows is a hash
+		#rows has a [:header]
+		#rows has a [:data]
+		#rows[:data] is an array of hashes
+		#puts rows
+		
+		#puts "@@@@@@@@@@@@@@"
+		#data = rows[:data]
+		#puts "anonymizing #{data.count} number of rows"
+		#data.each do |hash|
+    #  puts hash
+		#end
+		rows
+	end
+
   def fetch_remote(resource, headers)
     params = fetch_from_resource(resource, headers)
     encoded_data = params[:encoded_data]
     json = params[:json]
 
     rows = parse_encoded_data(encoded_data, json[:checksum])
-    @complete = rows == { }
+    if rows != { }
+		  rows = anon_rows(rows)
+		else
+			puts "rows is null"
+		end
+		@complete = rows == { }
 
     # update local state
     state.merge!(json[:state].merge(:chunksize => state[:chunksize]))
