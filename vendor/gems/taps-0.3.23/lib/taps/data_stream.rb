@@ -21,6 +21,7 @@ class DataStream
       :total_chunksize => 0,
     }.merge(state)
     @state[:chunksize] ||= DEFAULT_CHUNKSIZE
+    @state[:random_number] = rand
 		@complete = false
   end
 
@@ -128,7 +129,14 @@ class DataStream
   end
 
   def anon_rows(rows)
-		sensitive_cols = [:facebook_access_token, :password, :facebook_user_id] 
+		
+		#sensitive_cols = [:facebook_access_token, :password, :facebook_user_id] 
+		
+    sensitive_cols = YAML.load(File.read(Dir.pwd + '/config/anonymize.yml'))['columns']
+		
+		puts state[:random_number]
+    puts sensitive_cols
+		
 		
 		header = rows[:header]
     

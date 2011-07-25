@@ -1,0 +1,22 @@
+columns:
+  facebook_post_status_body
+  facebook_photo_id
+  device_id
+  ip_address
+  twitter_post_id
+  twitter_post_status_body
+  twitter_oauth_token
+  twitter_oauth_secret
+  twitter_avatar_url
+  facebook_access_token
+  facebook_user_id
+  password
+  encrypted_password
+  email
+  current_sign_in_ip
+  last_sign_in_ip
+  authentication_token
+  
+  
+  
+  
