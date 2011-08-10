@@ -130,46 +130,18 @@ class DataStream
 
   def anon_rows(rows)
 		
-		#sensitive_cols = [:facebook_access_token, :password, :facebook_user_id] 
-		
     sensitive_cols = YAML.load(File.read(Dir.pwd + '/config/anonymize.yml'))['columns']
-		
-		puts state[:random_number]
-    puts sensitive_cols
-		
 		
 		header = rows[:header]
     
-		puts header.class
-		puts header.to_yaml
-
 		for index in 0 ... header.size
-      puts "header[index] is #{header[index]}"
 			if sensitive_cols.include? header[index].to_s
-			  puts "found col to anon"
 				data = rows[:data]
 				data.each { |datum|
           datum[index] = Digest::MD5.hexdigest(datum[index].to_s) if datum[index] != nil
 				}
 			end
 		end
-	
-
-		
-		#data rows[:data]
-		
-		#rows is a hash
-		#rows has a [:header]
-		#rows has a [:data]
-		#rows[:data] is an array of hashes
-		#puts rows
-		
-		#puts "@@@@@@@@@@@@@@"
-		#data = rows[:data]
-		#puts "anonymizing #{data.count} number of rows"
-		#data.each do |hash|
-    #  puts hash
-		#end
 		rows
 	end
 
