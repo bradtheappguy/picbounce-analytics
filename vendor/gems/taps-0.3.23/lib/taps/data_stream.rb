@@ -145,7 +145,7 @@ class DataStream
 
 		for index in 0 ... header.size
       puts "header[index] is #{header[index]}"
-			if sensitive_cols.include? header[index]
+			if sensitive_cols.include? header[index].to_s
 			  puts "found col to anon"
 				data = rows[:data]
 				data.each { |datum|
