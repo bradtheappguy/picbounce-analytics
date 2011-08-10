@@ -149,7 +149,7 @@ class DataStream
 			  puts "found col to anon"
 				data = rows[:data]
 				data.each { |datum|
-          datum[index] = Digest::MD5.hexdigest(datum[index]) if datum[index] != nil
+          datum[index] = Digest::MD5.hexdigest(datum[index].to_s) if datum[index] != nil
 				}
 			end
 		end
